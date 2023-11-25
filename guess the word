@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+
+// Function to generate a random word
+std::string generateRandomWord() {
+    // For simplicity, using a predefined list of words
+    const std::string words[] = {"apple", "banana", "orange", "grape", "kiwi"};
+    int index = rand() % (sizeof(words) / sizeof(words[0]));
+    return words[index];
+}
+
+int main() {
+    srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
+
+    for (int attempt = 1; attempt <= 5; ++attempt) {
+        std::string S = generateRandomWord(); // Auto-generate hidden word S
+        std::string T, M;
+
+        // Input the guess word T
+        std::cout << "Attempt " << attempt << ": Enter your guess word T: ";
+        std::cin >> T;
+
+        // Check the correctness of guesses and generate string M
+        M = "";
+        for (int i = 0; i < S.length(); ++i) {
+            if (S[i] == T[i]) {
+                M += 'G'; // Correct guess
+            } else {
+                M += 'B'; // Incorrect guess
+            }
+        }
+
+        // Output the string M
+        std::cout << "String M: " << M << std::endl;
+
+        // Display the correct word if the guess is correct
+        if (M == std::string(S.length(), 'G')) {
+            std::cout << "Congratulations! You guessed the correct word: " << S << std::endl;
+            break; // Exit the loop if the correct word is guessed
+        } else {
+            std::cout << "Incorrect guess. Try again!" << std::endl;
+        }
+    }
+
+    std::cout << "Out of attempts. The correct word was: " << generateRandomWord() << std::endl;
+
+    return 0;
+}
